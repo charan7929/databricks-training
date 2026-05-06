@@ -93,6 +93,4 @@ Suggestions and improvements are welcome.
 ---
 
 ## 👤 Author
-
-**Your Name**
 charan7929
