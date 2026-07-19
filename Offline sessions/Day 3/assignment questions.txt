@@ -1,0 +1,496 @@
+Assignments on All types of joins
+
+Table 1: Departments
+
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY,
+    DepartmentName VARCHAR(50),
+    Location VARCHAR(50)
+);
+
+INSERT INTO Departments VALUES
+(1,'HR','New York'),
+(2,'Finance','Chicago'),
+(3,'IT','Dallas'),
+(4,'Marketing','Boston'),
+(5,'Sales','Seattle'),
+(6,'Operations','Atlanta');
+
+Table 2: Employees
+
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(50),
+    DepartmentID INT,
+    Salary DECIMAL(10,2),
+    ManagerID INT,
+    JoiningDate DATE
+);
+
+INSERT INTO Employees VALUES
+(101,'John',1,50000,NULL,'2020-01-15'),
+(102,'Emma',2,65000,101,'2021-03-10'),
+(103,'David',3,70000,101,'2019-07-22'),
+(104,'Sophia',3,72000,103,'2022-05-01'),
+(105,'Michael',5,55000,102,'2021-09-18'),
+(106,'Olivia',NULL,48000,102,'2023-01-12'),
+(107,'James',4,60000,103,'2022-10-20'),
+(108,'William',7,75000,101,'2020-08-11'),
+(109,'Ava',NULL,52000,NULL,'2024-02-15'),
+(110,'Isabella',5,68000,105,'2021-06-05');
+
+Table 3: Projects
+
+CREATE TABLE Projects (
+    ProjectID INT PRIMARY KEY,
+    ProjectName VARCHAR(50),
+    DepartmentID INT,
+    Budget DECIMAL(12,2)
+);
+
+INSERT INTO Projects VALUES
+(201,'Payroll System',1,150000),
+(202,'Audit System',2,200000),
+(203,'Website Redesign',4,100000),
+(204,'ERP Upgrade',3,500000),
+(205,'Sales Dashboard',5,175000),
+(206,'Automation',6,250000),
+(207,'AI Chatbot',8,300000);
+
+Table 4: EmployeeProjects
+
+CREATE TABLE EmployeeProjects (
+    EmployeeID INT,
+    ProjectID INT
+);
+
+INSERT INTO EmployeeProjects VALUES
+(101,201),
+(102,202),
+(103,204),
+(104,204),
+(105,205),
+(107,203),
+(110,205),
+(103,207),
+(108,207),
+(109,202);
+
+Table Relationships
+Departments
+--------------
+DepartmentID (PK)
+
+Employees
+--------------
+DepartmentID -> Departments
+
+Projects
+--------------
+DepartmentID -> Departments
+
+EmployeeProjects
+--------------
+EmployeeID -> Employees
+ProjectID -> Projects
+
+BASIC ASSIGNMENTS
+
+INNER JOIN
+============
+Display employee names with department names.
+Display project names with department names.
+Show employees along with project names.
+Show employee salary and department location.
+Display all employees working on projects.
+
+LEFT JOIN
+===========
+Show all employees even if they don't belong to any department.
+Show all departments even if no employee works there.
+Show all projects and their department names.
+Show every employee and their assigned projects.
+Display all employees even if they are not assigned to any project.
+
+RIGHT JOIN
+============
+Show all departments even if there are no employees.
+Show all projects even if no employee is assigned.
+Display every department and employees.
+Show all projects with departments.
+Show every project assignment including projects without employees.
+
+FULL JOIN
+===========
+Show all employees and all departments.
+Show all departments and projects.
+Display all employees and projects.
+Show every department whether employees exist or not.
+Show all departments and projects including unmatched records.
+
+INTERMEDIATE ASSIGNMENTS
+=========================
+INNER JOIN
+==========
+Show employees whose department is IT.
+Display employees working on projects with budget above 200000.
+Show employee names, department names and project names.
+Display total employees in each department.
+Show average salary department-wise.
+
+LEFT JOIN
+============
+Find employees without departments.
+Find employees without projects.
+Find departments without employees.
+Find projects without departments.
+Show departments with total employees including zero employees.
+
+RIGHT JOIN
+===========
+Find departments having no employees.
+Find projects without employees.
+Show departments even if no projects exist.
+Count employees in every department.
+List every project whether employees are assigned or not.
+
+FULL JOIN
+===========
+Display all departments and employees.
+Show unmatched employees.
+Show unmatched departments.
+Show all employees and departments with NULL handling.
+Display departments and projects including unmatched rows.
+ADVANCED ASSIGNMENTS
+
+INNER JOIN
+============
+Find highest-paid employee in every department.
+Find department having highest average salary.
+Find employee working on highest-budget project.
+Show managers and their employees.
+Find employees working on more than one project.
+
+LEFT JOIN
+============
+Find employees not assigned to any project.
+Find departments having no projects.
+Find departments having employees but no projects.
+Show employees with project count.
+Show project count department-wise including zero.
+
+RIGHT JOIN
+============
+Find projects without employees.
+Find departments without projects.
+Find projects whose department doesn't exist.
+Find orphan employee records.
+Display every department and employee count.
+
+LEFT ANTI JOIN
+================
+(Records in left table but not in right table)
+
+Use:
+
+SELECT e.*
+FROM Employees e
+LEFT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE d.DepartmentID IS NULL;
+
+Assignments:
+
+Find employees without departments.
+Find departments without employees.
+Find employees without projects.
+Find departments without projects.
+Find projects without departments.
+
+RIGHT ANTI JOIN
+
+Equivalent:
+
+SELECT d.*
+FROM Employees e
+RIGHT JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.EmployeeID IS NULL;
+
+Assignments:
+
+Departments without employees.
+Projects without employees.
+Departments without projects.
+Employees whose departments don't exist.
+Projects whose departments don't exist.
+FULL ANTI JOIN
+
+Use:
+
+SELECT *
+FROM Employees e
+FULL JOIN Departments d
+ON e.DepartmentID = d.DepartmentID
+WHERE e.DepartmentID IS NULL
+   OR d.DepartmentID IS NULL;
+
+Assignments:
+
+Find all unmatched employees and departments.
+Find all unmatched departments and employees.
+Find projects without departments and departments without projects.
+Find employees without projects and projects without employees.
+Show all orphan records across Employees and Departments.
+
+EXPERT LEVEL CHALLENGES
+===========================
+Find the department with the highest project budget.
+Find employees working in departments without projects.
+Find projects having multiple employees.
+Find employees assigned to projects outside their own department.
+Find departments where every employee is assigned to a project.
+Find employees who share the same manager.
+Find departments with no managers.
+Find managers with more than three employees.
+Find employees hired before their manager.
+Create one report showing:
+Employee Name
+Department
+Project
+Budget
+Manager Name
+Salary
+Department Location
+
+
+Set operators
+==============
+
+Table 1: CurrentEmployees
+
+CREATE TABLE CurrentEmployees (
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(50),
+    Department VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+Insert Values
+INSERT INTO CurrentEmployees VALUES
+(101,'John','HR',50000),
+(102,'Emma','Finance',65000),
+(103,'David','IT',70000),
+(104,'Sophia','IT',72000),
+(105,'Michael','Sales',55000),
+(106,'Olivia','Marketing',48000),
+(107,'James','Marketing',60000),
+(108,'William','IT',75000),
+(109,'Ava','Finance',52000),
+(110,'Isabella','Sales',68000);
+
+Table 2: FormerEmployees
+
+CREATE TABLE FormerEmployees (
+    EmployeeID INT PRIMARY KEY,
+    EmployeeName VARCHAR(50),
+    Department VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+Insert Values
+INSERT INTO FormerEmployees VALUES
+(105,'Michael','Sales',55000),
+(106,'Olivia','Marketing',48000),
+(111,'Lucas','HR',45000),
+(112,'Mia','Finance',62000),
+(113,'Ethan','IT',71000),
+(114,'Charlotte','Sales',53000),
+(115,'Benjamin','Operations',59000),
+(116,'Amelia','HR',51000),
+(117,'Henry','Finance',67000),
+(118,'Harper','IT',73000);
+
+Notice:
+
+Employees 105 and 106 appear in both tables.
+Other records are unique.
+
+Table 3: DomesticCustomers
+
+CREATE TABLE DomesticCustomers (
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(50),
+    City VARCHAR(50)
+);
+
+Insert Values
+
+INSERT INTO DomesticCustomers VALUES
+(1,'ABC Ltd','New York'),
+(2,'XYZ Corp','Chicago'),
+(3,'Global Tech','Dallas'),
+(4,'Sunrise Inc','Boston'),
+(5,'Bright Solutions','Seattle'),
+(6,'Alpha Systems','Miami');
+
+Table 4: InternationalCustomers
+
+CREATE TABLE InternationalCustomers (
+    CustomerID INT PRIMARY KEY,
+    CustomerName VARCHAR(50),
+    City VARCHAR(50)
+);
+
+Insert Values
+
+INSERT INTO InternationalCustomers VALUES
+(4,'Sunrise Inc','Boston'),
+(5,'Bright Solutions','Seattle'),
+(7,'TechWorld','London'),
+(8,'Future Corp','Toronto'),
+(9,'Vision Ltd','Dubai'),
+(10,'Skyline LLC','Sydney');
+
+Note:
+Customer IDs 4 and 5 exist in both tables.
+
+Table 5: OnlineOrders
+
+CREATE TABLE OnlineOrders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    Amount DECIMAL(10,2)
+);
+
+Insert Values
+
+INSERT INTO OnlineOrders VALUES
+(1001,1,250),
+(1002,2,450),
+(1003,3,700),
+(1004,5,900),
+(1005,7,350),
+(1006,8,1200);
+
+Table 6: StoreOrders
+
+CREATE TABLE StoreOrders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    Amount DECIMAL(10,2)
+);
+
+Insert Values
+
+INSERT INTO StoreOrders VALUES
+(1004,5,900),
+(1005,7,350),
+(1007,2,600),
+(1008,3,400),
+(1009,9,1100),
+(1010,10,850);
+
+BASIC ASSIGNMENTS
+==================
+UNION
+========
+Display all employee names from current and former employees without duplicates.
+Display all departments from both employee tables.
+Display all customer names from domestic and international customers.
+Display all customer cities without duplicates.
+Display all order amounts from both order tables without duplicates.
+
+UNION ALL
+============
+Display all employee names including duplicates.
+Display all departments including duplicate values.
+Display all customer names including duplicates.
+Display all customer cities including duplicates.
+Display all order amounts including duplicate values.
+
+EXCEPT
+=======
+Find current employees who are not former employees.
+Find former employees who are not current employees.
+Find domestic customers not present internationally.
+Find online orders not present in store orders.
+Find departments that exist only in current employees.
+
+INTERSECT
+============
+Find employees present in both tables.
+Find common departments.
+Find customers present in both customer tables.
+Find common cities.
+Find common orders.
+
+INTERMEDIATE ASSIGNMENTS
+==========================
+UNION
+=======
+Display all employee IDs and names.
+Display all customer IDs and names.
+Display all salaries without duplicates.
+Display all order IDs.
+Combine employee and former employee department lists.
+
+UNION ALL
+==========
+Count total rows returned using UNION ALL.
+Display all customer records including duplicates.
+Display all salaries including duplicates.
+Display all customer cities.
+Display all order amounts.
+
+EXCEPT
+=======
+Find employee IDs existing only in CurrentEmployees.
+Find employee IDs existing only in FormerEmployees.
+Find customer IDs existing only in DomesticCustomers.
+Find customer IDs existing only in InternationalCustomers.
+Find online order IDs not found in StoreOrders.
+
+INTERSECT
+===========
+Find employee IDs common to both tables.
+Find common customer IDs.
+Find common order IDs.
+Find common salaries.
+Find common departments.
+
+ADVANCED ASSIGNMENTS
+=======================
+UNION
+=======
+Combine employee names with customer names into one list.
+Create a unique list of all people and organizations.
+Display all departments from both tables in alphabetical order.
+Combine customer cities and employee departments into one result set.
+Display all IDs from employees and customers.
+
+UNION ALL
+===========
+Combine all employee and former employee records with duplicates.
+Display all order records.
+Display all customer records.
+Display employee names with a new column indicating the source table (Current/Former).
+Combine online and store orders with a source column.
+
+EXCEPT
+======
+Find customers who ordered online but never ordered in-store.
+Find customers who ordered in-store but never ordered online.
+Find employee names existing only in current employees.
+Find departments unique to former employees.
+Find customer cities unique to domestic customers.
+
+INTERSECT
+============
+Find customers who ordered both online and in-store.
+Find employees existing in both tables.
+Find departments appearing in both employee tables.
+Find customer names appearing in both customer tables.
+Find common salaries between current and former employees.
+
+
